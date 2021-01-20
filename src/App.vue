@@ -1,32 +1,40 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
-  </div>
+  <v-app>
+    <sidebar />
+
+    <v-main>
+      <router-view />
+    </v-main>
+  </v-app>
 </template>
 
+<script>
+import { mapMutations } from "vuex";
+import Sidebar from "./components/Sidebar";
+import { auth } from "./firebase";
+
+export default {
+  components: { Sidebar },
+  methods: {
+    ...mapMutations(["setUser"])
+  },
+  mounted() {
+    auth.onAuthStateChanged(user => {
+      this.setUser(user);
+    });
+  }
+};
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+@import url("https://fonts.googleapis.com/css2?family=Ribeye&display=swap");
+
+.brand {
+  font-family: "Ribeye";
 }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.nav-header {
+  padding: 20px 0;
+  font-size: 2.2em;
 }
 </style>
