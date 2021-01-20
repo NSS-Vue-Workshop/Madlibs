@@ -24,7 +24,7 @@
 <script>
 import { mapMutations } from "vuex";
 
-const url = "http://madlibz.herokuapp.com/api/random?minlength=3&maxlength=20";
+const url = "https://madlibz.herokuapp.com/api/random?minlength=3&maxlength=20";
 
 export default {
   data() {
