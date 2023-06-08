@@ -9,9 +9,9 @@ export default new Vuex.Store({
     madlib: {
       title: null,
       blanks: [],
-      value: [],
-      inputs: []
-    }
+      text: [],
+      inputs: [],
+    },
   },
   mutations: {
     setMadlib(state, payload) {
@@ -19,11 +19,11 @@ export default new Vuex.Store({
     },
     setUser(state, payload) {
       state.user = payload;
-    }
+    },
   },
   getters: {
     story({ madlib }) {
-      return madlib.value.reduce((story, fragment, index) => {
+      return madlib.text.reduce((story, fragment, index) => {
         if (fragment === 0) return story;
 
         story += fragment;
@@ -33,7 +33,7 @@ export default new Vuex.Store({
         }
         return story;
       }, "");
-    }
+    },
   },
-  modules: {}
+  modules: {},
 });

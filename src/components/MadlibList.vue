@@ -1,8 +1,8 @@
 <template>
   <v-expansion-panels>
     <v-expansion-panel v-for="madlib in madlibs" :key="madlib.id">
-      <v-expansion-panel-header class="brand">
-        {{ madlib.title }}
+      <v-expansion-panel-header>
+        <strong>{{ madlib.title }}</strong>
       </v-expansion-panel-header>
       <v-expansion-panel-content>
         {{ madlib.story }}
@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  props: ["madlibs"]
+  props: ["madlibs"],
 };
 </script>
 

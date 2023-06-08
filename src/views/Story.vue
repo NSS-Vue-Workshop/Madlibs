@@ -14,26 +14,27 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import { db } from "../firebase";
 
 export default {
   computed: {
     ...mapState(["madlib", "user"]),
-    ...mapGetters(["story"])
+    ...mapGetters(["story"]),
   },
   methods: {
-    publish() {
+    async publish() {
       if (!this.user) return;
-
-      db.collection("madlibs").add({
+      await db.collection("madlibs").add({
         title: this.madlib.title,
         story: this.story,
         authorName: this.user.displayName,
-        authorId: this.user.uid
+        authorId: this.user.uid,
       });
-    }
-  }
+
+      this.$router.push("my-madlibs");
+    },
+  },
 };
 </script>
 

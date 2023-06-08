@@ -1,9 +1,7 @@
 <template>
-  <div class="pa-5">
-    <div v-if="!template" class="text-center mt-5">
-      <v-progress-circular size="100" indeterminate color="teal" />
-    </div>
-    <v-row v-else justify="center" class="mt-6">
+  <div v-if="template" class="pa-5">
+    <h1 class="text-center teal--text brand">{{ template.title }}</h1>
+    <v-row justify="center" class="mt-6">
       <v-col :sm="12" :md="8" :lg="6">
         <v-form @submit.prevent="handleSubmit">
           <div v-for="(prompt, index) in template.blanks" :key="index">
@@ -23,32 +21,27 @@
 
 <script>
 import { mapMutations } from "vuex";
-
-const url = "https://madlibz.herokuapp.com/api/random?minlength=3&maxlength=20";
+import { getRandomTemplate } from "../data/templates";
 
 export default {
   data() {
     return {
-      template: null
+      template: null,
     };
   },
   methods: {
     ...mapMutations(["setMadlib"]),
     getTemplate() {
-      fetch(url)
-        .then(res => res.json())
-        .then(data => {
-          this.template = data;
-          this.template.inputs = [];
-        });
+      this.template = getRandomTemplate();
+      this.template.inputs = [];
     },
     handleSubmit() {
       this.setMadlib(this.template);
       this.$router.push("/story");
-    }
+    },
   },
   mounted() {
     this.getTemplate();
-  }
+  },
 };
 </script>
